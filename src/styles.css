@@ -1,0 +1,234 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Noto Sans SC", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Noto Sans SC", sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-teal: var(--teal);
+  --color-warning: var(--warning);
+  --color-violet: var(--violet);
+  --color-glass: var(--glass);
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: oklch(0.965 0.01 250);
+  --foreground: oklch(0.22 0.03 260);
+  --card: oklch(1 0 0 / 0.72);
+  --card-foreground: oklch(0.22 0.03 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.03 260);
+  --primary: oklch(0.58 0.19 258);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0.02 250);
+  --secondary-foreground: oklch(0.3 0.05 258);
+  --muted: oklch(0.94 0.012 250);
+  --muted-foreground: oklch(0.55 0.03 255);
+  --accent: oklch(0.93 0.04 250);
+  --accent-foreground: oklch(0.45 0.17 258);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.9 0.015 250 / 0.8);
+  --input: oklch(0.9 0.015 250);
+  --ring: oklch(0.58 0.19 258);
+  --success: oklch(0.72 0.17 152);
+  --teal: oklch(0.78 0.11 190);
+  --warning: oklch(0.78 0.16 70);
+  --violet: oklch(0.6 0.17 290);
+  --glass: oklch(1 0 0 / 0.68);
+  --shadow-glass: 0 10px 40px -12px oklch(0.5 0.1 255 / 0.25);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background:
+      radial-gradient(circle at 15% 10%, oklch(0.93 0.04 245) 0, transparent 40%),
+      radial-gradient(circle at 85% 80%, oklch(0.92 0.05 240) 0, transparent 45%),
+      var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+}
+
+@utility glass {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid oklch(1 0 0 / 0.8);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-2xl);
+}
+
+@utility font-num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@utility page-enter {
+  animation: fade-up 0.5s ease-out both;
+}
+@keyframes ping-soft {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 50%, transparent); }
+  100% { box-shadow: 0 0 0 14px transparent; }
+}
+@utility pulse-dot {
+  animation: ping-soft 1.6s ease-out infinite;
+}
+
+/* The two dock trucks: drive out along their axis, pause off-screen, back in */
+@keyframes truck-drive {
+  0%, 6% { transform: translate(0,0) rotate(0deg); animation-timing-function: cubic-bezier(.5,0,1,1); }
+  14% { transform: translate(11.5cqw, 9.7cqw) rotate(0deg); animation-timing-function: linear; }
+  19% { transform: translate(22cqw, 21cqw) rotate(6deg); animation-timing-function: linear; }
+  24% { transform: translate(32cqw, 48cqw) rotate(16deg); }
+  24.01%, 34% { transform: translate(32cqw, 48cqw) rotate(16deg); animation-timing-function: linear; }
+  42% { transform: translate(22cqw, 21cqw) rotate(6deg); animation-timing-function: cubic-bezier(0,0,.5,1); }
+  49% { transform: translate(11.5cqw, 9.7cqw) rotate(0deg); animation-timing-function: cubic-bezier(.5,0,.6,1); }
+  50% { transform: translate(11.5cqw, 9.7cqw) rotate(0deg); animation-timing-function: cubic-bezier(.3,0,.4,1); }
+  56%, 100% { transform: translate(0,0) rotate(0deg); }
+}
+@keyframes wheel-spin {
+  0%, 6% { transform: rotate(0deg); animation-timing-function: cubic-bezier(.5,0,1,1); }
+  14% { transform: rotate(1800deg); animation-timing-function: linear; }
+  19% { transform: rotate(3700deg); animation-timing-function: linear; }
+  24%, 34% { transform: rotate(7400deg); animation-timing-function: linear; }
+  42% { transform: rotate(3700deg); animation-timing-function: cubic-bezier(0,0,.5,1); }
+  49% { transform: rotate(1800deg); animation-timing-function: cubic-bezier(.5,0,.6,1); }
+  50% { transform: rotate(1800deg); animation-timing-function: cubic-bezier(.3,0,.4,1); }
+  56%, 100% { transform: rotate(0deg); }
+}
+@keyframes body-bob {
+  0%, 6%, 24%, 34%, 100% { transform: translateY(0); }
+  9%, 13%, 17%, 21%, 37%, 41%, 45% { transform: translateY(-0.7px); }
+  11%, 15%, 19%, 23%, 39%, 43%, 47% { transform: translateY(0.4px); }
+  49.5% { transform: translateY(0.8px); }
+  52%, 54% { transform: translateY(-0.4px); }
+  56.5% { transform: translateY(0.9px); }
+  58% { transform: translateY(0); }
+}
+@keyframes agv-route {
+  0% { left: 29%; top: 53%; }
+  25% { left: 35%; top: 59%; }
+  50% { left: 39.5%; top: 55%; }
+  75% { left: 33.5%; top: 49%; }
+  100% { left: 29%; top: 53%; }
+}
+@keyframes belt-a {
+  0% { left: 66%; top: 47.5%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { left: 46.5%; top: 57.5%; opacity: 0; }
+}
+@keyframes belt-b {
+  0% { left: 59.5%; top: 61.5%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { left: 41.5%; top: 70%; opacity: 0; }
+}
+@keyframes bob { 50% { transform: translate(-50%, -52%); } }
+@utility anim-truck-a { transform-origin: 40% 60%; animation: truck-drive 24s linear infinite; }
+@utility anim-truck-b { transform-origin: 40% 60%; animation: truck-drive 24s linear infinite; animation-delay: -12s; }
+@utility truck-wheel { transform-origin: 50% 50%; animation: wheel-spin 24s linear infinite; }
+@utility truck-body { animation: body-bob 24s linear infinite; }
+@utility anim-agv { animation: agv-route 14s linear infinite; }
+@utility anim-belt-a { animation: belt-a 7s linear infinite; }
+@utility anim-belt-b { animation: belt-b 6s linear infinite; }
+@utility scene-fit {
+  container-type: size;
+}
+
+/* Movement stays aligned with the isometric loading lanes. */
+@keyframes dock-shuttle {
+  0%, 12%, 92%, 100% { transform: translate(0, 0); }
+  42%, 58% { transform: translate(9cqw, 6cqw); }
+}
+@keyframes robot-shuttle {
+  0%, 10%, 90%, 100% { transform: translate(0, 0); }
+  40%, 58% { transform: translate(12cqw, -8cqw); }
+}
+.anim-truck-a, .anim-truck-b { animation-name: dock-shuttle; will-change: transform; }
+.anim-agv { left: 40%; top: 58%; animation-name: robot-shuttle; will-change: transform; }
+.anim-belt-a, .anim-belt-b { translate: none; }
+@keyframes belt-a {
+  0% { left: 59%; top: 44%; opacity: 0; }
+  8%, 90% { opacity: 1; }
+  100% { left: 36%; top: 59%; opacity: 0; }
+}
+@keyframes belt-b {
+  0% { left: 63.8%; top: 49%; opacity: 0; }
+  8%, 90% { opacity: 1; }
+  100% { left: 51%; top: 58.5%; opacity: 0; }
+}
+.conveyor-flow path { fill: none; stroke: #77dfff; stroke-width: 5; stroke-dasharray: 9 15; stroke-linecap: round; opacity: .8; animation: conveyor-roll 1.2s linear infinite; }
+@keyframes conveyor-roll { to { stroke-dashoffset: -48; } }
+.scene-paused .scene-fit *, .scene-paused .pulse-dot { animation-play-state: paused !important; }
+.scene-control { position: absolute; right: 2rem; top: 1rem; }
+.scene-control:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+.logistics-webgl { min-height: 740px; }
+.logistics-webgl canvas { display: block; touch-action: none; }
+.world-hotspot { position: absolute; top: 0; left: 0; z-index: 3; display: flex; align-items: center; gap: 12px; will-change: transform; }
+.world-hotspot-dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 0 6px #ffffffcf, 0 0 0 10px #ffffff38; }
+.world-hotspot-card { position: relative; min-width: 145px; padding: 12px 34px 12px 15px; border: 1px solid #ffffffdc; border-radius: 15px; background: #f6faffc9; backdrop-filter: blur(15px); box-shadow: 0 8px 28px #48779820; transition: background .2s; }
+.world-hotspot:hover .world-hotspot-card { background: #fff; }
+.world-hotspot:focus-visible { outline: 2px solid #4288e9; outline-offset: 8px; }
+.world-hotspot-card small { display: block; font-size: 8px; letter-spacing: 1.3px; color: #8295a9; }
+.world-hotspot-card strong { display: block; margin-top: 4px; font-size: 12px; color: #2a4057; }
+.world-hotspot-card > span { position: absolute; right: 13px; bottom: 13px; color: #4288e9; }
+@media (max-width: 700px) { .world-hotspot-card { min-width: 95px; padding: 8px 23px 8px 9px; } .world-hotspot-card small { display: none; } .world-hotspot-card strong { font-size: 10px; } }
+.dashboard-layout { pointer-events: none; }
+.dashboard-layout section, .dashboard-layout button, .dashboard-layout a { pointer-events: auto; }
+.scene-instructions { position: absolute; right: 2rem; top: 9rem; z-index: 2; font-size: 11px; color: #526c86; pointer-events: none; }
+@media (max-width: 700px) { .logistics-webgl { height: 650px; min-height: 0; } .scene-instructions { top: 16rem; right: 1rem; } }
+@media (min-width: 1500px) { .dashboard-bottom { margin-top: clamp(6rem, 14vh, 12rem); } }
+@media (max-width: 1100px) {
+  .dashboard-layout { grid-template-columns: 270px 1fr 1fr; padding-inline: 1rem; }
+  .dashboard-bottom { grid-template-columns: 270px 1fr; }
+  .dashboard-bottom > :last-child { grid-column: span 2; }
+  .scene-control { position: static; margin-top: 1rem; }
+}
+@media (max-width: 700px) {
+  .dashboard-layout { display: flex; flex-direction: column; }
+  .dashboard-layout h1 { font-size: 1.5rem; }
+  .dashboard-layout > :nth-child(2) { margin-top: 17rem; }
+  .dashboard-bottom { display: flex; flex-direction: column; margin-top: 0; }
+  .operations-home .scene-fit { bottom: auto; height: 650px; }
+  .operations-home .scene-fit > div { width: 1150px !important; left: 36%; }
+  .operations-home .scene-fit a { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .operations-home *, .operations-home *::before, .operations-home *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .anim-belt-a, .anim-belt-b { opacity: 0; }
+}
